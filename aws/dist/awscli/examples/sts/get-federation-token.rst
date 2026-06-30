@@ -44,7 +44,7 @@ Output::
 
     {
         "Credentials": {
-            "AccessKeyId": "ASIAIOSFODNN7EXAMPLE",
+            "AccessKeyId": "TEMP_ACCESS_KEY_ID_EXAMPLE",
             "SecretAccessKey": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",
             "SessionToken": "EXAMPLEpZ2luX2VjEGoaCXVzLXdlc3QtMiJIMEYCIQC/W9pL5ArQyDD5JwFL3/h5+WGopQ24GEXweNctwhi9sgIhAMkg+MZE35iWM8s4r5Lr25f9rSTVPFH98G42QQunWMTfKq0DCOP//////////wEQAxoMNDUyOTI1MTcwNTA3Igxuy3AOpuuoLsk3MJwqgQPg8QOd9HuoClUxq26wnc/nm+eZLjHDyGf2KUAHK2DuaS/nrGSEXAMPLE",
             "Expiration": "2023-12-20T02:06:07+00:00"
