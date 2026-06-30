@@ -2,9 +2,11 @@ import { getBearerToken, validateJWT } from "../auth";
 import { respondWithJSON } from "./json";
 import { getVideo, updateVideo } from "../db/videos";
 import type { ApiConfig } from "../config";
-import { pathToFileURL, type BunRequest } from "bun";
+import type { BunRequest } from "bun";
 import { BadRequestError, NotFoundError, UserForbiddenError } from "./errors";
 import path from "path";
+import { buffer } from "stream/consumers";
+import { randomBytes } from "crypto";
 
 export async function handlerUploadThumbnail(cfg: ApiConfig, req: BunRequest) {
   const { videoId } = req.params as { videoId?: string };
@@ -30,8 +32,12 @@ export async function handlerUploadThumbnail(cfg: ApiConfig, req: BunRequest) {
     throw new BadRequestError("uploaded file exceeds the max upload size of 20");
   }
   const mediaType = file.type;
-  const extension = file.type.split("/"[1]);
-  const fileName = `${videoId}.${extension}`;
+  if (!mediaType.startsWith("image/")) {
+    throw new BadRequestError("thumbnail must be an image");
+  }
+  const buffer = randomBytes(32).toString("base64url");
+
+  const fileName = `${buffer}.${mediaType}`;
 
   const filePath = path.join(cfg.assetsRoot, fileName);
 
@@ -39,7 +45,8 @@ export async function handlerUploadThumbnail(cfg: ApiConfig, req: BunRequest) {
 
   await Bun.write(filePath, bytes);
 
-  const thumbnailURL = `/assets/${fileName}`
+  const origin = new URL(req.url).origin;
+  const thumbnailURL = `${origin}/assets/${fileName}`;
 
 
   const video = getVideo(cfg.db, videoId);
