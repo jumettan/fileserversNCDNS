@@ -54,7 +54,6 @@ export async function handlerVideoGet(cfg: ApiConfig, req: BunRequest) {
   if (!video) {
     throw new NotFoundError("Couldn't find video");
   }
-
   return respondWithJSON(200, video);
 }
 
